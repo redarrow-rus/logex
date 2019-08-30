@@ -6,7 +6,7 @@
 			"name": "Alex S. Mironov",
 			"email": "win2000rus@hotmail.com"
 		}
-	]
+	],
 	"require": {
 		"php": ">=5.5.0"
 	},
