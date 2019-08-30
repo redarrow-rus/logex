@@ -1,5 +1,12 @@
 {
 	"name": "as-mironov/logex",
-	"require": {},
+	"description": "Simple logger",
+	"authors":[
+		"name": "Alex S. Mironov",
+		"email": "win2000rus@hotmail.com"
+	]
+	"require": {
+		"php": ">=5.5.0"
+	},
 	"version": "1.0.0"
 }
