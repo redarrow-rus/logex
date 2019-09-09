@@ -122,7 +122,12 @@ class LogEx
    {
       if (self::$logfile == "-")
          return;
-      if (!is_writable(self::$logfile))
+      if (!file_exists(self::$logfile) && !is_writable(dirname(self::$logfile)))
+      {
+         self::$logfile = "-";
+         $this->log(self::L_WARN, "Cannot create the log file, changing to STDERR.");
+      }
+      if (file_exists(self::$logfile) && !is_writable(self::$logfile))
       {
          self::$logfile = "-";
          $this->log(self::L_WARN, "The log file is NOT writable, changing to STDERR.");
