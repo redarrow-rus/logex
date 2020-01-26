@@ -1,5 +1,7 @@
 <?php
 
+namespace logex;
+
 class LogEx
 {
    const L_ALL    = 4;
