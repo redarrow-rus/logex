@@ -33,19 +33,20 @@ class LogEx
       if ( empty(self::$instance) )
       {
          self::$instance = new self();
-         if(!defined('STDIN'))  define('STDIN',  fopen('php://stdin',  'r'));
-         if(!defined('STDOUT')) define('STDOUT', fopen('php://stdout', 'w'));
-         if(!defined('STDERR')) define('STDERR', fopen('php://stderr', 'w'));
+         if(!defined('STDIN'))  { define('STDIN',  fopen('php://stdin',  'r')); }
+         if(!defined('STDOUT')) { define('STDOUT', fopen('php://stdout', 'w')); }
+         if(!defined('STDERR')) { define('STDERR', fopen('php://stderr', 'w')); }
       }
       return self::$instance;
    }
    
    public static function setLevel($level)
    {
-      if ($level < 0 || $level > 4)
+      if ($level < 0 || $level > 4) {
          self::$level = self::L_ERROR;
-      else
+      } else {
          self::$level = $level;
+      }
    }
    
    public static function setLogFile($logfile)
@@ -59,25 +60,21 @@ class LogEx
       return self::$logfile;
    }
 
-   public function clear()
+   public static function clear()
    {
-      if (self::$logfile == '-')
-         return;
+      if (self::$logfile == '-') { return; }
       $fh = fopen(self::$logfile, 'w');
       fclose($fh);
    }
    
    public function log($level, $message)
    {
-      if (!isset($message) || !$message || !preg_match('/^\d+$/', $level))
+      if (!isset($message) || !$message || !preg_match('/^\d+$/', $level)) {
          return FALSE;
-      $this->isCorrectLog();
-      if ($level < 0 || $level > 4)
-      {
-         $level = 0;
       }
-      if ($level <= self::$level)
-      {
+      $this->isCorrectLog();
+      if ($level < 0 || $level > 4) { $level = 0; }
+      if ($level <= self::$level) {
          switch ($level)
          {
             case self::L_ERROR:
@@ -103,12 +100,9 @@ class LogEx
          preg_replace('/[\t\s\n]+/', ' ', $message);
          $message = "$stamp" . ($this->is_pid == 0 ? "" : " [" . getmypid() . "]" ) . " $prefix: $message\n";
          
-         if (self::$logfile == '-')
-         {
+         if (self::$logfile == '-') {
             fwrite(STDERR, $message);
-         }
-         else
-         {
+         } else {
             $fh = fopen(self::$logfile, 'a');
             fwrite($fh, $message);
             fclose($fh);
@@ -116,21 +110,17 @@ class LogEx
                fwrite(STDERR, $message);
          }
       }
-      if ($level == self::L_ERROR)
-         exit(2);
+      if ($level == self::L_ERROR) { exit(2); }
    }
    
    private function isCorrectLog()
    {
-      if (self::$logfile == "-")
-         return;
-      if (!file_exists(self::$logfile) && !is_writable(dirname(self::$logfile)))
-      {
+      if (self::$logfile == "-") { return; }
+      if (!file_exists(self::$logfile) && !is_writable(dirname(self::$logfile))) {
          self::$logfile = "-";
          $this->log(self::L_WARN, "Cannot create the log file, changing to STDERR.");
       }
-      if (file_exists(self::$logfile) && !is_writable(self::$logfile))
-      {
+      if (file_exists(self::$logfile) && !is_writable(self::$logfile)) {
          self::$logfile = "-";
          $this->log(self::L_WARN, "The log file is NOT writable, changing to STDERR.");
       }
