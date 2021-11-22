@@ -113,6 +113,26 @@ class LogEx
       if ($level == self::L_ERROR) { exit(2); }
    }
    
+   public function error($level, $message)
+   {
+      $this->log(self::L_ERROR, $message);
+   }
+   
+   public function warn($level, $message)
+   {
+      $this->log(self::L_WARN, $message);
+   }
+   
+   public function info($level, $message)
+   {
+      $this->log(self::L_INFO, $message);
+   }
+   
+   public function debug($level, $message)
+   {
+      $this->log(self::L_DEBUG, $message);
+   }
+   
    private function isCorrectLog()
    {
       if (self::$logfile == "-") { return; }
