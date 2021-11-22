@@ -113,22 +113,22 @@ class LogEx
       if ($level == self::L_ERROR) { exit(2); }
    }
    
-   public function error($level, $message)
+   public function error($message)
    {
       $this->log(self::L_ERROR, $message);
    }
    
-   public function warn($level, $message)
+   public function warn($message)
    {
       $this->log(self::L_WARN, $message);
    }
    
-   public function info($level, $message)
+   public function info($message)
    {
       $this->log(self::L_INFO, $message);
    }
    
-   public function debug($level, $message)
+   public function debug($message)
    {
       $this->log(self::L_DEBUG, $message);
    }
